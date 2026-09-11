@@ -1,12 +1,6 @@
 import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
-/**
- * Refreshes the Supabase auth session on every request and returns
- * both the response (with refreshed cookies) and the current user's
- * role, which route guards in middleware.ts use to protect /admin,
- * /teacher and /parent.
- */
 export async function updateSession(request: NextRequest) {
   let response = NextResponse.next({ request: { headers: request.headers } });
 
