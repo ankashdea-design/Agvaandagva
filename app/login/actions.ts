@@ -17,10 +17,10 @@ export async function login(_prevState: LoginState, formData: FormData): Promise
   const { data, error } = await supabase.auth.signInWithPassword({ email, password });
 
   if (error || !data.user) {
-    return { error: "Имэйл эсвэл нууц үг буруу байна." };
+    return { error: `AUTH ERROR: ${error?.message ?? "unknown"}` };
   }
 
-  const { data: profile } = await supabase
+  const { data: profile, error: profileError } = await supabase
     .from("profiles")
     .select("role, is_active")
     .eq("id", data.user.id)
@@ -28,7 +28,9 @@ export async function login(_prevState: LoginState, formData: FormData): Promise
 
   if (!profile || !profile.is_active) {
     await supabase.auth.signOut();
-    return { error: "Энэ хэрэглэгч идэвхгүй байна. Админтай холбогдоно уу." };
+    return {
+      error: `DEBUG: uid=${data.user.id} | profileError=${profileError?.message ?? "none"} | profile=${JSON.stringify(profile)}`,
+    };
   }
 
   redirect(`/${profile.role}`);
