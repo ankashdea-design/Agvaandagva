@@ -62,6 +62,12 @@ export default function LoginPage() {
           )}
 
           <SubmitButton />
+
+          <div className="text-center">
+            <a href="/forgot-password" className="text-sm text-brand-600 hover:underline">
+              Нууц үг мартсан?
+            </a>
+          </div>
         </form>
 
         <div className="mt-6 rounded-2xl border border-dashed border-brand-200 bg-white/60 p-4 text-xs text-brand-700">
