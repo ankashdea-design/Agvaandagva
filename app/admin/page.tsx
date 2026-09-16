@@ -17,6 +17,12 @@ export default async function AdminDashboardPage() {
       <h1 className="mb-1 text-lg font-semibold text-brand-900">{overview.kindergartenName}</h1>
       <p className="mb-4 text-sm text-brand-500">Хянах самбар</p>
 
+      {(overview as any).debugError && (
+        <p className="mb-4 rounded-lg bg-red-50 p-3 text-xs text-red-600 break-all">
+          DEBUG: {(overview as any).debugError}
+        </p>
+      )}
+
       <div className="mb-4 grid grid-cols-3 gap-2">
         <Stat label="Нийт хүүхэд" value={overview.childCount} />
         <Stat label="Нийт багш" value={overview.teacherCount} />
