@@ -7,32 +7,43 @@ export async function getAdminOverview(date: string = todayISO()) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const { data: kinder } = await supabase
+  const { data: kinder, error: kinderError } = await supabase
     .from("kindergartens")
     .select("id, name")
     .eq("admin_id", user?.id)
     .single();
 
-  if (!kinder) return null;
+  if (!kinder) {
+    return {
+      kindergartenName: "",
+      childCount: 0,
+      teacherCount: 0,
+      classCount: 0,
+      todayComplete: 0,
+      todayTotal: 0,
+      perTeacher: [],
+      debugError: `NO KINDER: user=${user?.id ?? "none"} | error=${kinderError?.message ?? "none"}`,
+    };
+  }
 
-  const { count: childCount } = await supabase
+  const { count: childCount, error: childError } = await supabase
     .from("children")
     .select("id, classes!inner(kindergarten_id)", { count: "exact", head: true })
     .eq("classes.kindergarten_id", kinder.id)
     .eq("is_active", true);
 
-  const { count: teacherCount } = await supabase
+  const { count: teacherCount, error: teacherError } = await supabase
     .from("teachers")
     .select("id", { count: "exact", head: true })
     .eq("kindergarten_id", kinder.id);
 
-  const { count: classCount } = await supabase
+  const { count: classCount, error: classError } = await supabase
     .from("classes")
     .select("id", { count: "exact", head: true })
     .eq("kindergarten_id", kinder.id)
     .eq("is_active", true);
 
-  const { data: classes } = await supabase
+  const { data: classes, error: classesListError } = await supabase
     .from("classes")
     .select("id, name, teacher_classes(teacher_id, teachers(profiles(full_name)))")
     .eq("kindergarten_id", kinder.id)
@@ -63,6 +74,16 @@ export async function getAdminOverview(date: string = todayISO()) {
   const todayTotal = perTeacher.reduce((s, t) => s + t.total, 0);
   const todayComplete = perTeacher.reduce((s, t) => s + t.complete, 0);
 
+  const debugParts = [
+    childError && `childError=${childError.message}`,
+    teacherError && `teacherError=${teacherError.message}`,
+    classError && `classError=${classError.message}`,
+    classesListError && `classesListError=${classesListError.message}`,
+    `kinderId=${kinder.id}`,
+    `rawClassCount=${classCount}`,
+    `classesArrayLength=${classes?.length ?? "null"}`,
+  ].filter(Boolean);
+
   return {
     kindergartenName: kinder.name,
     childCount: childCount ?? 0,
@@ -71,5 +92,6 @@ export async function getAdminOverview(date: string = todayISO()) {
     todayComplete,
     todayTotal,
     perTeacher,
+    debugError: debugParts.length > 0 ? debugParts.join(" | ") : null,
   };
 }
