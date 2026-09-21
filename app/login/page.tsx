@@ -6,12 +6,6 @@ import { Button } from "@/components/ui/button";
 
 const initialState: LoginState = { error: null };
 
-const DEMO_ACCOUNTS = [
-  { label: "Админ", email: "admin@demo.mn" },
-  { label: "Багш", email: "teacher@demo.mn" },
-  { label: "Эцэг эх", email: "parent@demo.mn" },
-];
-
 function SubmitButton() {
   const { pending } = useFormStatus();
   return (
@@ -42,7 +36,7 @@ export default function LoginPage() {
               name="email"
               type="email"
               required
-              placeholder="teacher@demo.mn"
+              placeholder="you@example.com"
               className="w-full rounded-xl border border-brand-200 px-3 py-2.5 text-base outline-none focus:border-brand-500"
             />
           </div>
@@ -69,19 +63,6 @@ export default function LoginPage() {
             </a>
           </div>
         </form>
-
-        <div className="mt-6 rounded-2xl border border-dashed border-brand-200 bg-white/60 p-4 text-xs text-brand-700">
-          <p className="mb-2 font-semibold">Demo нэвтрэх мэдээлэл</p>
-          {DEMO_ACCOUNTS.map((a) => (
-            <div key={a.email} className="flex justify-between py-0.5">
-              <span>{a.label}</span>
-              <code className="text-brand-500">{a.email}</code>
-            </div>
-          ))}
-          <p className="mt-2">
-            Нууц үг: <code className="text-brand-500">Demo1234!</code>
-          </p>
-        </div>
       </div>
     </main>
   );
