@@ -75,7 +75,7 @@ export function ChildDetailSheet({
   const [note, setNote] = useState(child.daily_report?.highlight_note ?? "");
   const [, startTransition] = useTransition();
 
-  const blankReport: DailyReport = {
+    const blankReport: DailyReport = {
     id: `temp-${child.id}`,
     child_id: child.id,
     class_id: classId,
