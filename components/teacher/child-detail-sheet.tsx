@@ -75,28 +75,28 @@ export function ChildDetailSheet({
   const [note, setNote] = useState(child.daily_report?.highlight_note ?? "");
   const [, startTransition] = useTransition();
 
-  const blankReport: DailyReport = {
-    id: `temp-${child.id}`,
-    child_id: child.id,
-    class_id: classId,
-    report_date: date,
-    mood: null,
-    meal: null,
-    nap_start: null,
-    nap_end: null,
-    hygiene_hands: false,
-    hygiene_toilet: false,
-    hygiene_teeth: false,
-    highlight_note: null,
-    extra_note: null,
-    is_complete: false,
-    updated_at: new Date().toISOString(),
-    updated_by: null,
-    juice: null,
-    meal1: null,
-    meal2: null,
-    bowel: null,
-  };
+          const report = c.daily_report ?? {
+          id: `temp-${c.id}`,
+          child_id: c.id,
+          class_id: classId,
+          report_date: date,
+          mood: null,
+          meal: null,
+          nap_start: null,
+          nap_end: null,
+          hygiene_hands: false,
+          hygiene_toilet: false,
+          hygiene_teeth: false,
+          highlight_note: null,
+          extra_note: null,
+          is_complete: false,
+          updated_at: new Date().toISOString(),
+          updated_by: null,
+          juice: null,
+          meal1: null,
+          meal2: null,
+          bowel: null,
+        };
   const report = child.daily_report ?? blankReport;
   const activities = child.daily_activities ?? {
     id: `temp-act-${child.id}`,
