@@ -70,7 +70,7 @@ export function TeacherDashboard({
     // Optimistic local update
     setChildren((prev) =>
       prev.map((c) => {
-        const report = c.daily_report ?? {
+              const report = c.daily_report ?? {
           id: `temp-${c.id}`,
           child_id: c.id,
           class_id: classId,
@@ -87,6 +87,10 @@ export function TeacherDashboard({
           is_complete: false,
           updated_at: new Date().toISOString(),
           updated_by: null,
+          juice: null,
+          meal1: null,
+          meal2: null,
+          bowel: null,
         };
         if (kind.type === "meal") return { ...c, daily_report: { ...report, meal: kind.value } };
         if (kind.type === "mood") return { ...c, daily_report: { ...report, mood: kind.value } };
