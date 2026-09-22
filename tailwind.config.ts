@@ -5,6 +5,9 @@ const config: Config = {
   content: ["./app/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}"],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ["var(--font-inter)", "system-ui", "sans-serif"],
+      },
       colors: {
         brand: {
           50: "#f4f7f5",
@@ -26,11 +29,12 @@ const config: Config = {
       },
       borderRadius: {
         xl: "1rem",
-        "2xl": "1.5rem",
+        "2xl": "1.25rem",
       },
       boxShadow: {
-        soft: "0 2px 12px rgba(20, 30, 25, 0.06)",
-        card: "0 4px 20px rgba(20, 30, 25, 0.08)",
+        soft: "0 1px 3px rgba(20, 30, 25, 0.04), 0 4px 12px rgba(20, 30, 25, 0.03)",
+        card: "0 2px 8px rgba(20, 30, 25, 0.05), 0 8px 24px rgba(20, 30, 25, 0.06)",
+        lift: "0 4px 16px rgba(20, 30, 25, 0.08), 0 12px 32px rgba(20, 30, 25, 0.08)",
       },
     },
   },
