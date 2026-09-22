@@ -2,7 +2,7 @@ import { BottomNav } from "@/components/nav/bottom-nav";
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen bg-warm-50 pb-20">
+    <div className="min-h-screen pb-20">
       {children}
       <BottomNav
         items={[
