@@ -12,12 +12,14 @@ body {
 body {
   background-color: #f7f5f0;
   background-image:
-    radial-gradient(circle at 8% 12%, rgba(201, 219, 208, 0.45), transparent 40%),
-    radial-gradient(circle at 92% 18%, rgba(231, 213, 184, 0.4), transparent 42%),
-    radial-gradient(circle at 15% 85%, rgba(163, 194, 174, 0.3), transparent 45%),
-    radial-gradient(circle at 88% 92%, rgba(212, 195, 168, 0.35), transparent 40%);
+    radial-gradient(circle at 8% 12%, rgba(201, 219, 208, 0.5), transparent 40%),
+    radial-gradient(circle at 92% 18%, rgba(231, 213, 184, 0.45), transparent 42%),
+    radial-gradient(circle at 15% 85%, rgba(163, 194, 174, 0.35), transparent 45%),
+    radial-gradient(circle at 88% 92%, rgba(212, 195, 168, 0.4), transparent 40%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 400 400'%3E%3Cg fill='none' stroke='%234f7d62' stroke-width='1.5' opacity='0.08'%3E%3Ccircle cx='60' cy='60' r='18'/%3E%3Ccircle cx='340' cy='90' r='12'/%3E%3Cpath d='M120 250 l6 -14 l6 14 l-6 -6 z'/%3E%3Cpath d='M300 320 l6 -14 l6 14 l-6 -6 z'/%3E%3Cpath d='M40 320 q10 -20 20 0 q10 -20 20 0' /%3E%3Cpath d='M250 40 q10 -16 20 0 q10 -16 20 0' /%3E%3Ccircle cx='200' cy='200' r='2' fill='%234f7d62' stroke='none'/%3E%3Ccircle cx='170' cy='120' r='2' fill='%234f7d62' stroke='none'/%3E%3Ccircle cx='230' cy='280' r='2' fill='%234f7d62' stroke='none'/%3E%3C/g%3E%3C/svg%3E");
   background-attachment: fixed;
-  background-repeat: no-repeat;
+  background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, repeat;
+  background-size: auto, auto, auto, auto, 400px 400px;
   min-height: 100vh;
 }
 
