@@ -2,7 +2,16 @@
 
 import { useState, useTransition } from "react";
 import { X } from "lucide-react";
-import type { ChildWithReport, MealStatus, MoodStatus, DailyReport, DailyActivities } from "@/types/database";
+import type {
+  ChildWithReport,
+  MealStatus,
+  MoodStatus,
+  DailyReport,
+  DailyActivities,
+  JuiceStatus,
+  MealIntakeStatus,
+  BowelStatus,
+} from "@/types/database";
 import { updateReportField, updateActivity } from "@/app/teacher/actions";
 import { cn } from "@/lib/utils";
 
@@ -15,6 +24,21 @@ const MEALS: { value: MealStatus; label: string }[] = [
   { value: "poor", label: "Муу" },
   { value: "medium", label: "Дунд" },
   { value: "good", label: "Сайн" },
+];
+const JUICE_OPTIONS: { value: JuiceStatus; label: string }[] = [
+  { value: "drank", label: "Уусан" },
+  { value: "partial", label: "Бага зэрэг уусан" },
+  { value: "not_drank", label: "Уугаагүй" },
+];
+const MEAL_INTAKE_OPTIONS: { value: MealIntakeStatus; label: string }[] = [
+  { value: "ate", label: "Идсэн" },
+  { value: "partial", label: "Бага зэрэг идсэн" },
+  { value: "not_ate", label: "Идээгүй" },
+];
+const BOWEL_OPTIONS: { value: BowelStatus; label: string }[] = [
+  { value: "good", label: "Сайн" },
+  { value: "medium", label: "Дунд" },
+  { value: "none", label: "Бие засаагүй" },
 ];
 const ACTIVITIES: { key: keyof DailyActivities; label: string; icon: string }[] = [
   { key: "drawing", label: "Зураг", icon: "🎨" },
@@ -68,6 +92,10 @@ export function ChildDetailSheet({
     is_complete: false,
     updated_at: new Date().toISOString(),
     updated_by: null,
+    juice: null,
+    meal1: null,
+    meal2: null,
+    bowel: null,
   };
   const report = child.daily_report ?? blankReport;
   const activities = child.daily_activities ?? {
@@ -152,6 +180,46 @@ export function ChildDetailSheet({
             {MEALS.map((m) => (
               <PillButton key={m.value} active={report.meal === m.value} onClick={() => saveField("meal", m.value, "meal")}>
                 <span className="text-xs">{m.label}</span>
+              </PillButton>
+            ))}
+          </div>
+        </Section>
+
+        <Section title="🥤 Өдрийн жүүс">
+          <div className="grid grid-cols-3 gap-2">
+            {JUICE_OPTIONS.map((o) => (
+              <PillButton key={o.value} active={report.juice === o.value} onClick={() => saveField("juice", o.value, "juice")}>
+                <span className="text-xs">{o.label}</span>
+              </PillButton>
+            ))}
+          </div>
+        </Section>
+
+        <Section title="🍲 1-р хоол">
+          <div className="grid grid-cols-3 gap-2">
+            {MEAL_INTAKE_OPTIONS.map((o) => (
+              <PillButton key={o.value} active={report.meal1 === o.value} onClick={() => saveField("meal1", o.value, "meal1")}>
+                <span className="text-xs">{o.label}</span>
+              </PillButton>
+            ))}
+          </div>
+        </Section>
+
+        <Section title="🍲 2-р хоол">
+          <div className="grid grid-cols-3 gap-2">
+            {MEAL_INTAKE_OPTIONS.map((o) => (
+              <PillButton key={o.value} active={report.meal2 === o.value} onClick={() => saveField("meal2", o.value, "meal2")}>
+                <span className="text-xs">{o.label}</span>
+              </PillButton>
+            ))}
+          </div>
+        </Section>
+
+        <Section title="🚽 Хүндээр бие зассан">
+          <div className="grid grid-cols-3 gap-2">
+            {BOWEL_OPTIONS.map((o) => (
+              <PillButton key={o.value} active={report.bowel === o.value} onClick={() => saveField("bowel", o.value, "bowel")}>
+                <span className="text-xs">{o.label}</span>
               </PillButton>
             ))}
           </div>
