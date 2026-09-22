@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
-import type { MealStatus, MoodStatus, AttendanceStatus } from "@/types/database";
+import type { MealStatus, MoodStatus, AttendanceStatus, JuiceStatus, MealIntakeStatus, BowelStatus } from "@/types/database";
 
 type ActivityKey = "drawing" | "music" | "story" | "play" | "physical" | "cognitive";
 
@@ -37,8 +37,12 @@ export async function updateReportField(input: {
     | "hygiene_toilet"
     | "hygiene_teeth"
     | "highlight_note"
-    | "extra_note";
-  value: MealStatus | MoodStatus | boolean | string;
+    | "extra_note"
+    | "juice"
+    | "meal1"
+    | "meal2"
+    | "bowel";
+  value: MealStatus | MoodStatus | boolean | string | JuiceStatus | MealIntakeStatus | BowelStatus;
 }) {
   const supabase = createClient();
   const {
@@ -123,7 +127,6 @@ export async function bulkApplyToClass(input: {
     data: { user },
   } = await supabase.auth.getUser();
 
-  // Ensure every child has a report row for today, in one batch upsert.
   const reportRows = input.childIds.map((childId) => ({
     child_id: childId,
     class_id: input.classId,
