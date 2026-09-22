@@ -6,6 +6,9 @@ export type UserRole = "admin" | "teacher" | "parent";
 export type MealStatus = "poor" | "medium" | "good";
 export type MoodStatus = "sad" | "neutral" | "happy";
 export type AttendanceStatus = "present" | "absent" | "sick" | "excused";
+export type JuiceStatus = "drank" | "partial" | "not_drank";
+export type MealIntakeStatus = "ate" | "partial" | "not_ate";
+export type BowelStatus = "good" | "medium" | "none";
 
 export interface Profile {
   id: string;
@@ -44,6 +47,10 @@ export interface DailyReport {
   is_complete: boolean;
   updated_at: string;
   updated_by: string | null;
+  juice: JuiceStatus | null;
+  meal1: MealIntakeStatus | null;
+  meal2: MealIntakeStatus | null;
+  bowel: BowelStatus | null;
 }
 
 export interface DailyActivities {
