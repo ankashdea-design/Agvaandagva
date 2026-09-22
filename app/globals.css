@@ -6,6 +6,8 @@ html,
 body {
   background-color: #f7f5f0;
   color: #24362d;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 * {
@@ -15,4 +17,16 @@ body {
 .touch-target {
   min-height: 44px;
   min-width: 44px;
+}
+
+h1, h2, h3 {
+  letter-spacing: -0.01em;
+}
+
+::selection {
+  background-color: #c9dbd0;
+}
+
+input, select, textarea {
+  transition: border-color 0.15s ease-out;
 }
