@@ -41,7 +41,9 @@ export async function updateReportField(input: {
     | "juice"
     | "meal1"
     | "meal2"
-    | "bowel";
+    | "bowel"
+    | "morning_tea"
+    | "evening_tea";
   value: MealStatus | MoodStatus | boolean | string | JuiceStatus | MealIntakeStatus | BowelStatus;
 }) {
   const supabase = createClient();
