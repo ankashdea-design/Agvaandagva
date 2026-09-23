@@ -91,6 +91,9 @@ export function TeacherDashboard({
           meal1: null,
           meal2: null,
           bowel: null,
+          morning_tea: null,
+          evening_tea: null,
+                
         };
         if (kind.type === "meal") return { ...c, daily_report: { ...report, meal: kind.value } };
         if (kind.type === "mood") return { ...c, daily_report: { ...report, mood: kind.value } };
