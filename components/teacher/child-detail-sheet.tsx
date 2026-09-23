@@ -96,6 +96,8 @@ export function ChildDetailSheet({
     meal1: null,
     meal2: null,
     bowel: null,
+    morning_tea: null,
+    evening_tea: null,
   };
   const report = child.daily_report ?? blankReport;
   const activities = child.daily_activities ?? {
@@ -175,6 +177,16 @@ export function ChildDetailSheet({
           </div>
         </Section>
 
+        <Section title="☕ Өглөөний цай">
+          <div className="grid grid-cols-3 gap-2">
+            {JUICE_OPTIONS.map((o) => (
+              <PillButton key={o.value} active={report.morning_tea === o.value} onClick={() => saveField("morning_tea", o.value, "morning_tea")}>
+                <span className="text-xs">{o.label}</span>
+              </PillButton>
+            ))}
+          </div>
+        </Section>
+
         <Section title="🍚 Хоол">
           <div className="grid grid-cols-3 gap-2">
             {MEALS.map((m) => (
@@ -209,6 +221,16 @@ export function ChildDetailSheet({
           <div className="grid grid-cols-3 gap-2">
             {MEAL_INTAKE_OPTIONS.map((o) => (
               <PillButton key={o.value} active={report.meal2 === o.value} onClick={() => saveField("meal2", o.value, "meal2")}>
+                <span className="text-xs">{o.label}</span>
+              </PillButton>
+            ))}
+          </div>
+        </Section>
+
+        <Section title="🍵 Оройн цай">
+          <div className="grid grid-cols-3 gap-2">
+            {JUICE_OPTIONS.map((o) => (
+              <PillButton key={o.value} active={report.evening_tea === o.value} onClick={() => saveField("evening_tea", o.value, "evening_tea")}>
                 <span className="text-xs">{o.label}</span>
               </PillButton>
             ))}
