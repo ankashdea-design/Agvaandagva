@@ -59,6 +59,7 @@ export async function updateReportField(input: {
 
   if (error) throw new Error(error.message);
   revalidatePath("/teacher");
+  revalidatePath("/parent");
   return { ok: true };
 }
 
@@ -82,6 +83,7 @@ export async function updateActivity(input: {
 
   if (error) throw new Error(error.message);
   revalidatePath("/teacher");
+  revalidatePath("/parent");
   return { ok: true };
 }
 
@@ -107,6 +109,7 @@ export async function updateAttendance(input: {
 
   if (error) throw new Error(error.message);
   revalidatePath("/teacher");
+  revalidatePath("/parent");
   return { ok: true };
 }
 
@@ -158,5 +161,7 @@ export async function bulkApplyToClass(input: {
   }
 
   revalidatePath("/teacher");
-  return { ok: true, count: input.childIds.length };
+  revalidatePath("/parent");
+  return { ok: true };
+}
 }
