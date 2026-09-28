@@ -8,25 +8,25 @@ const config: Config = {
       fontFamily: {
         sans: ["var(--font-inter)", "system-ui", "sans-serif"],
       },
-      colors: {
-        brand: {
-          50: "#f4f7f5",
-          100: "#e6ede8",
-          200: "#c9dbd0",
-          300: "#a3c2ae",
-          400: "#749f85",
-          500: "#4f7d62",
-          600: "#3c634d",
-          700: "#314f3f",
-          800: "#2a4035",
-          900: "#24362d",
-        },
-        warm: {
-          50: "#fbf8f4",
-          100: "#f4ecdf",
-          200: "#e7d5b8",
-        },
-      },
+     colors: {
+  brand: {
+    50: "#fff8f5",
+    100: "#ffeee6",
+    200: "#ffd9c7",
+    300: "#ffb999",
+    400: "#ff9062",
+    500: "#f76b35",
+    600: "#e5541f",   // үндсэн өнгө
+    700: "#c04317",
+    800: "#9a3815",
+    900: "#7d3115",
+  },
+  warm: {
+    50: "#fdfaf6",
+    100: "#f7efe3",
+    200: "#ecdcc4",
+  },
+},
       borderRadius: {
         xl: "1rem",
         "2xl": "1.25rem",
