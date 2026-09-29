@@ -6,7 +6,10 @@ export const dynamic = "force-dynamic";
 
 function timeLabel(iso: string) {
   return new Date(iso).toLocaleString("mn-MN", {
-    month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
     timeZone: "Asia/Ulaanbaatar",
   });
 }
@@ -15,7 +18,7 @@ export default async function TeacherMessagesPage() {
   const supabase = createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
-  // ⚠️ Миний бүлгүүд — classes.teacher_id багана (өөр бол соль)
+  // Миний бүлгүүд — classes.teacher_id багана
   const { data: myClasses } = await supabase
     .from("classes")
     .select("id, name")
@@ -34,7 +37,7 @@ export default async function TeacherMessagesPage() {
     : { data: [] };
 
   // Хэрэглэгч тус бүрээр бүлэглэх (thread маягийн)
-  const threads = new Map<string, typeof messages>();
+  const threads = new Map<string, { id: string; body: string; created_at: string; sender_id: string; recipient_id: string | null; class_id: string | null }[]>();
   for (const m of messages ?? []) {
     const otherId = m.sender_id === user?.id ? (m.recipient_id ?? "") : m.sender_id;
     if (!otherId) continue;
@@ -70,7 +73,7 @@ export default async function TeacherMessagesPage() {
           >
             <p className="mb-3 text-sm font-extrabold text-slate-800">👨‍👩‍👧 {nameOf(parentId)}</p>
             <div className="space-y-2">
-              {(msgs as any[]).slice(0, 10).map((m) => {
+              {msgs.slice(0, 10).map((m) => {
                 const mine = m.sender_id === user?.id;
                 return (
                   <div key={m.id} className={cn("flex", mine ? "justify-end" : "justify-start")}>
