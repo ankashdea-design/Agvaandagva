@@ -145,7 +145,7 @@ export function ParentDashboard({
             alt=""
             width={110}
             height={110}
-            className="pointer-events-none hidden w-24 shrink-0 select-none sm:block"
+            className="pointer-events-none hidden w-36 shrink-0 select-none sm:block"
           />
         </div>
 
