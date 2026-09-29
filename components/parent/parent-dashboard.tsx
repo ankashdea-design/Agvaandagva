@@ -112,7 +112,6 @@ export function ParentDashboard({
               <MiniRow icon="🍲" label="1-р хоол" value={report?.meal1 ? MEAL_INTAKE_LABEL[report.meal1] : "—"} />
               <MiniRow icon="🍲" label="2-р хоол" value={report?.meal2 ? MEAL_INTAKE_LABEL[report.meal2] : "—"} />
               <MiniRow icon="🍵" label="Оройн цай" value={report?.evening_tea ? JUICE_LABEL[report.evening_tea] : "—"} />
-              <MiniRow icon="🚽" label="Бие засалт" value={report?.bowel ? BOWEL_LABEL[report.bowel] : "—"} />
             </div>
           </div>
 
