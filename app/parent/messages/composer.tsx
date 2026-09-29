@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { useFormState, useFormStatus } from "react-dom";
 import { sendMessage, type SendMessageState } from "./actions";
 
@@ -20,8 +21,20 @@ function SubmitButton() {
 
 export function Composer() {
   const [state, formAction] = useFormState(sendMessage, initialState);
+  const formRef = useRef<HTMLFormElement>(null);
+  const lastState = useRef(state);
+
+  // Амжилттай илгээгдсэн үед талбарыг цэвэрлэнэ
+  useEffect(() => {
+    if (lastState.current !== state) {
+      lastState.current = state;
+      if (state?.error == null) formRef.current?.reset();
+    }
+  }, [state]);
+
   return (
     <form
+      ref={formRef}
       action={formAction}
       className="rounded-3xl border border-slate-100 bg-white p-4 shadow-[0_10px_36px_rgba(65,81,216,0.08)]"
     >
