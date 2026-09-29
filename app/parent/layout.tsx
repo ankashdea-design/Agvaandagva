@@ -1,12 +1,12 @@
-import { BottomNav } from "@/components/nav/bottom-nav";
+import { BottomNav, type NavIcon } from "@/components/nav/bottom-nav";
 import { AppSidebar } from "@/components/nav/app-sidebar";
 
-const items = [
+const items: { href: string; label: string; icon: NavIcon }[] = [
   { href: "/parent", label: "Нүүр", icon: "home" },
   { href: "/parent/history", label: "Түүх", icon: "history" },
   { href: "/parent/notifications", label: "Мэдэгдэл", icon: "bell" },
   { href: "/parent/profile", label: "Профайл", icon: "user" },
-] as const;
+];
 
 export default function ParentLayout({ children }: { children: React.ReactNode }) {
   return (
