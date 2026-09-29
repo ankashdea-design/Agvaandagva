@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, Users, History, User, LayoutDashboard, School, FileBarChart, Settings, Bell } from "lucide-react";
+import { Home, Users, History, User, LayoutDashboard, School, FileBarChart, Settings, Bell, MessageSquare } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const ICONS = {
@@ -15,6 +15,7 @@ const ICONS = {
   reports: FileBarChart,
   settings: Settings,
   bell: Bell,
+  message: MessageSquare,
 } as const;
 
 export type NavIcon = keyof typeof ICONS;
