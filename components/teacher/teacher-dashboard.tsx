@@ -56,7 +56,7 @@ export function TeacherDashboard({
   }, [children, filter, query]);
 
   function patchChild(childId: string, patch: Partial<ChildWithReport>) {
-    setChildren((prev) => prev.map((c) => (c.id === childIdIdFix(c, childId) ? { ...c, ...patch } : c)));
+  setChildren((prev) => prev.map((c) => (c.id === childId ? { ...c, ...patch } : c)));
   }
 
   function showToast(msg: string) {
