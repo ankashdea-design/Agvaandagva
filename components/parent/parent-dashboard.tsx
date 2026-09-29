@@ -119,7 +119,7 @@ export function ParentDashboard({
             <p className="mb-2 text-sm font-semibold text-brand-800">🧼 Ариун цэвэр</p>
             <div className="grid grid-cols-1 gap-1.5 text-sm">
               <HygieneRow label="Гар угаасан" done={Boolean(report?.hygiene_hands)} />
-              <HygieneRow label="Бие зассан" done={Boolean(report?.hygiene_toilet)} />
+              <HygieneRow label="Хүндээр бие зассан" done={Boolean(report?.hygiene_toilet)} />
               <HygieneRow label="Шүд угаасан" done={Boolean(report?.hygiene_teeth)} />
             </div>
           </div>
