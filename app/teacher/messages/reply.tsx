@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { useFormState, useFormStatus } from "react-dom";
 import { replyToParent, type SendMessageState } from "./actions";
 
@@ -20,8 +21,19 @@ function SubmitButton() {
 
 export function TeacherReply({ recipientId, classId }: { recipientId: string; classId: string }) {
   const [state, formAction] = useFormState(replyToParent, initialState);
+  const formRef = useRef<HTMLFormElement>(null);
+  const lastState = useRef(state);
+
+  // Амжилттай илгээгдсэн үед талбарыг цэвэрлэнэ
+  useEffect(() => {
+    if (lastState.current !== state) {
+      lastState.current = state;
+      if (state?.error == null) formRef.current?.reset();
+    }
+  }, [state]);
+
   return (
-    <form action={formAction} className="mt-3 flex items-start gap-2">
+    <form ref={formRef} action={formAction} className="mt-3 flex items-start gap-2">
       <input type="hidden" name="recipient_id" value={recipientId} />
       <input type="hidden" name="class_id" value={classId} />
       <div className="flex-1">
