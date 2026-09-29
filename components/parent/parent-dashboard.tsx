@@ -143,8 +143,8 @@ export function ParentDashboard({
                     <Image
             src="/illustrations/3.png"
             alt=""
-            width={96}
-            height={96}
+            width={110}
+            height={110}
             className="pointer-events-none hidden w-24 shrink-0 select-none sm:block"
           />
         </div>
