@@ -56,7 +56,7 @@ export function TeacherDashboard({
   }, [children, filter, query]);
 
   function patchChild(childId: string, patch: Partial<ChildWithReport>) {
-    setChildren((prev) => prev.map((c) => (c.id === childId ? { ...c, ...patch } : c)));
+    setChildren((prev) => prev.map((c) => (c.id === childIdIdFix(c, childId) ? { ...c, ...patch } : c)));
   }
 
   function showToast(msg: string) {
@@ -70,7 +70,7 @@ export function TeacherDashboard({
     // Optimistic local update
     setChildren((prev) =>
       prev.map((c) => {
-              const report = c.daily_report ?? {
+        const report = c.daily_report ?? {
           id: `temp-${c.id}`,
           child_id: c.id,
           class_id: classId,
@@ -93,7 +93,6 @@ export function TeacherDashboard({
           bowel: null,
           morning_tea: null,
           evening_tea: null,
-                
         };
         if (kind.type === "meal") return { ...c, daily_report: { ...report, meal: kind.value } };
         if (kind.type === "mood") return { ...c, daily_report: { ...report, mood: kind.value } };
@@ -164,21 +163,25 @@ export function TeacherDashboard({
   return (
     <div className="mx-auto max-w-md">
       {/* Header */}
-      <header className="sticky top-0 z-30 border-b border-brand-100 bg-warm-50/95 px-4 pb-3 pt-5 backdrop-blur">
+      <header className="sticky top-0 z-30 border-b border-white/60 bg-white/55 px-4 pb-3 pt-5 backdrop-blur-xl">
         <div className="mb-3 flex items-center justify-between">
           <div>
-            <h1 className="text-lg font-semibold text-brand-900">{className || "Бэлтгэл бүлэг"}</h1>
-            <p className="text-sm text-brand-500">{total} хүүхэд · {formatMongolianDate(date)}</p>
+            <h1 className="text-lg font-extrabold tracking-tight text-slate-900">
+              {className || "Бэлтгэл бүлэг"}
+            </h1>
+            <p className="text-sm text-slate-500">
+              {total} хүүхэд · {formatMongolianDate(date)}
+            </p>
           </div>
           <div className="flex items-center gap-2">
             {!online && (
-              <span className="flex items-center gap-1 rounded-full bg-amber-50 px-2 py-1 text-xs text-amber-700">
+              <span className="flex items-center gap-1 rounded-full border border-amber-300/60 bg-amber-400/15 px-2.5 py-1 text-xs font-semibold text-amber-800">
                 <WifiOff size={13} /> Офлайн{pendingCount > 0 ? ` (${pendingCount})` : ""}
               </span>
             )}
-            <div className="flex h-11 items-center gap-1 rounded-xl bg-brand-600 px-3 text-white shadow-soft">
+            <div className="flex h-11 items-center gap-1.5 rounded-xl bg-gradient-to-b from-brand-500 to-brand-600 px-3.5 text-white shadow-lg shadow-brand-600/25">
               <CheckCircle2 size={16} />
-              <span className="text-sm font-semibold">
+              <span className="text-sm font-bold">
                 {completeCount} / {total}
               </span>
             </div>
@@ -187,12 +190,12 @@ export function TeacherDashboard({
 
         {/* Search */}
         <div className="relative mb-2">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-brand-300" size={18} />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Хүүхдийн нэрээр хайх..."
-            className="w-full rounded-xl border border-brand-200 bg-white py-2.5 pl-10 pr-3 text-sm outline-none focus:border-brand-500"
+            className="glass-btn w-full rounded-xl py-2.5 pl-10 pr-3 text-sm outline-none placeholder:text-slate-400 focus:ring-2 focus:ring-brand-400"
           />
         </div>
 
@@ -224,16 +227,18 @@ export function TeacherDashboard({
       <div className="px-4 pt-3">
         <button
           onClick={() => setBulkSheetOpen(true)}
-          className="w-full touch-target rounded-xl border-2 border-dashed border-brand-300 bg-brand-50 py-3 text-sm font-semibold text-brand-700 active:bg-brand-100"
+          className="glass-btn press w-full touch-target rounded-2xl border-dashed py-3 text-sm font-semibold text-brand-700 hover:bg-white/70"
         >
           ⚡ Бүгдэд тэмдэглэх
         </button>
       </div>
 
       {/* Child list */}
-      <ul className="divide-y divide-brand-100 px-4 pb-6 pt-2">
+      <ul className="space-y-2 px-4 pb-6 pt-3">
         {filtered.length === 0 && (
-          <li className="py-10 text-center text-sm text-brand-400">Илэрц олдсонгүй.</li>
+          <li className="glass-soft rounded-2xl py-10 text-center text-sm text-slate-400">
+            Илэрц олдсонгүй.
+          </li>
         )}
         {filtered.map((child) => (
           <ChildRow
@@ -262,7 +267,7 @@ export function TeacherDashboard({
       )}
 
       {toast && (
-        <div className="fixed bottom-24 left-1/2 z-50 -translate-x-1/2 rounded-xl bg-brand-900 px-4 py-2.5 text-sm text-white shadow-card">
+        <div className="glass-strong fixed bottom-24 left-1/2 z-50 -translate-x-1/2 rounded-2xl px-4 py-2.5 text-sm font-semibold text-slate-900">
           {toast}
         </div>
       )}
@@ -282,17 +287,19 @@ function FilterChip({
   tone?: "neutral" | "warning" | "danger" | "success";
 }) {
   const toneActive: Record<string, string> = {
-    neutral: "bg-brand-700 text-white",
-    warning: "bg-amber-600 text-white",
-    danger: "bg-red-500 text-white",
-    success: "bg-emerald-600 text-white",
+    neutral: "bg-gradient-to-b from-brand-500 to-brand-600 text-white shadow-lg shadow-brand-600/25",
+    warning: "bg-gradient-to-b from-amber-400 to-amber-500 text-white shadow-lg shadow-amber-500/25",
+    danger: "bg-gradient-to-b from-rose-500 to-rose-600 text-white shadow-lg shadow-rose-500/25",
+    success: "bg-gradient-to-b from-emerald-400 to-emerald-500 text-white shadow-lg shadow-emerald-500/25",
   };
   return (
     <button
       onClick={onClick}
       className={cn(
-        "shrink-0 touch-target rounded-full border px-3 py-1.5 text-xs font-medium transition-colors",
-        active ? toneActive[tone] + " border-transparent" : "border-brand-200 bg-white text-brand-600"
+        "press shrink-0 touch-target rounded-full border px-3.5 py-1.5 text-xs font-semibold transition-all",
+        active
+          ? toneActive[tone] + " border-transparent"
+          : "glass-btn text-slate-600"
       )}
     >
       {label}
