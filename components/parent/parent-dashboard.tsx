@@ -37,7 +37,7 @@ export function ParentDashboard({
   const attendance = active.attendance;
 
   return (
-    <div className="mx-auto max-w-md px-4 pt-5">
+    <div className="mx-auto max-w-md px-4 pb-24 pt-5">
       {children.length > 1 && (
         <div className="mb-4 flex gap-2 overflow-x-auto pb-1">
           {children.map((c) => (
@@ -45,10 +45,10 @@ export function ParentDashboard({
               key={c.id}
               onClick={() => setActiveId(c.id)}
               className={cn(
-                "shrink-0 touch-target rounded-full border px-4 py-2 text-sm font-medium",
+                "press shrink-0 touch-target rounded-full border px-4 py-2 text-sm font-medium",
                 c.id === activeId
-                  ? "border-brand-600 bg-brand-600 text-white"
-                  : "border-brand-200 bg-white text-brand-700"
+                  ? "border-transparent bg-gradient-to-b from-brand-500 to-brand-600 text-white shadow-lg shadow-brand-600/25"
+                  : "glass-btn text-slate-700"
               )}
             >
               {c.full_name}
@@ -58,16 +58,16 @@ export function ParentDashboard({
       )}
 
       <div className="mb-5">
-        <h1 className="text-xl font-semibold text-brand-900">{active.full_name}</h1>
-        <p className="text-sm text-brand-500">
+        <h1 className="text-2xl font-extrabold tracking-tight text-slate-900">{active.full_name}</h1>
+        <p className="text-sm text-slate-500">
           {active.class_name ? `${active.class_name} · ` : ""}
           {formatMongolianDate(date)}
         </p>
       </div>
 
       {attendance && attendance.status !== "present" ? (
-        <div className="mb-4 rounded-2xl bg-amber-50 p-4 text-amber-800">
-          <p className="font-medium">
+        <div className="mb-4 rounded-2xl border border-amber-300/50 bg-amber-400/15 px-4 py-3.5 text-amber-800">
+          <p className="font-semibold">
             {attendance.status === "absent" && "Өнөөдөр ирээгүй"}
             {attendance.status === "sick" && "🤒 Өнөөдөр өвчтэй"}
             {attendance.status === "excused" && "🏠 Өнөөдөр чөлөөтэй"}
@@ -76,7 +76,7 @@ export function ParentDashboard({
       ) : (
         <>
           {report?.highlight_note && (
-            <div className="mb-4 rounded-2xl bg-brand-600 p-4 text-white shadow-card">
+            <div className="mb-4 rounded-3xl bg-gradient-to-br from-brand-500 to-brand-600 p-4 text-white shadow-lg shadow-brand-600/25">
               <p className="mb-1 text-xs font-medium opacity-80">⭐ Өнөөдрийн онцлох</p>
               <p className="text-sm leading-relaxed">{report.highlight_note}</p>
             </div>
@@ -104,8 +104,7 @@ export function ParentDashboard({
             />
           )}
 
-          <div className="mb-3 rounded-2xl bg-white p-4 shadow-soft">
-            <p className="mb-2 text-sm font-semibold text-brand-800">🍽️ Хоол, цайны дэлгэрэнгүй</p>
+          <SectionCard title="🍽️ Хоол, цайны дэлгэрэнгүй" className="mb-3">
             <div className="grid grid-cols-2 gap-2">
               <MiniRow icon="☕" label="Өглөөний цай" value={report?.morning_tea ? JUICE_LABEL[report.morning_tea] : "—"} />
               <MiniRow icon="🥤" label="Өдрийн жүүс" value={report?.juice ? JUICE_LABEL[report.juice] : "—"} />
@@ -113,19 +112,17 @@ export function ParentDashboard({
               <MiniRow icon="🍲" label="2-р хоол" value={report?.meal2 ? MEAL_INTAKE_LABEL[report.meal2] : "—"} />
               <MiniRow icon="🍵" label="Оройн цай" value={report?.evening_tea ? JUICE_LABEL[report.evening_tea] : "—"} />
             </div>
-          </div>
+          </SectionCard>
 
-          <div className="mb-3 rounded-2xl bg-white p-4 shadow-soft">
-            <p className="mb-2 text-sm font-semibold text-brand-800">🧼 Ариун цэвэр</p>
+          <SectionCard title="🧼 Ариун цэвэр" className="mb-3">
             <div className="grid grid-cols-1 gap-1.5 text-sm">
               <HygieneRow label="Гар угаасан" done={Boolean(report?.hygiene_hands)} />
               <HygieneRow label="Хүндээр бие зассан" done={Boolean(report?.hygiene_toilet)} />
               <HygieneRow label="Шүд угаасан" done={Boolean(report?.hygiene_teeth)} />
             </div>
-          </div>
+          </SectionCard>
 
-          <div className="mb-3 rounded-2xl bg-white p-4 shadow-soft">
-            <p className="mb-2 text-sm font-semibold text-brand-800">ӨНӨӨДӨР</p>
+          <SectionCard title="ӨНӨӨДӨР" className="mb-3">
             <div className="grid grid-cols-2 gap-2">
               {ACTIVITY_LABELS.map((a) => {
                 const done = activities ? Boolean((activities as any)[a.key]) : false;
@@ -133,8 +130,10 @@ export function ParentDashboard({
                   <div
                     key={a.key}
                     className={cn(
-                      "flex items-center gap-2 rounded-xl px-3 py-2 text-sm",
-                      done ? "bg-emerald-50 text-emerald-700" : "bg-brand-50/50 text-brand-300"
+                      "flex items-center gap-2 rounded-xl border px-3 py-2 text-sm",
+                      done
+                        ? "border-emerald-300/50 bg-emerald-400/15 text-emerald-800"
+                        : "border-white/50 bg-white/30 text-slate-400"
                     )}
                   >
                     <span>{done ? "✓" : "○"}</span>
@@ -143,16 +142,32 @@ export function ParentDashboard({
                 );
               })}
             </div>
-          </div>
+          </SectionCard>
 
           {report?.extra_note && (
-            <div className="mb-3 rounded-2xl bg-white p-4 shadow-soft">
-              <p className="mb-1 text-sm font-semibold text-brand-800">📝 Багшийн тэмдэглэл</p>
-              <p className="text-sm text-brand-600">{report.extra_note}</p>
-            </div>
+            <SectionCard title="📝 Багшийн тэмдэглэл" className="mb-3">
+              <p className="text-sm leading-relaxed text-slate-600">{report.extra_note}</p>
+            </SectionCard>
           )}
         </>
       )}
+    </div>
+  );
+}
+
+function SectionCard({
+  title,
+  children,
+  className,
+}: {
+  title: string;
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <div className={cn("glass rounded-3xl p-4", className)}>
+      <p className="mb-2 text-sm font-semibold text-slate-700">{title}</p>
+      {children}
     </div>
   );
 }
@@ -169,26 +184,31 @@ function StatusCard({
   className?: string;
 }) {
   return (
-    <div className={cn("rounded-2xl bg-white p-4 shadow-soft", className)}>
+    <div className={cn("glass glass-hover rounded-3xl p-4", className)}>
       <p className="mb-1 text-2xl">{icon}</p>
-      <p className="text-xs text-brand-400">{label}</p>
-      <p className="text-sm font-semibold text-brand-900">{value}</p>
+      <p className="text-xs text-slate-500">{label}</p>
+      <p className="text-sm font-semibold text-slate-900">{value}</p>
     </div>
   );
 }
 
 function MiniRow({ icon, label, value }: { icon: string; label: string; value: string }) {
   return (
-    <div className="rounded-xl bg-brand-50/50 px-3 py-2">
-      <p className="text-xs text-brand-400">{icon} {label}</p>
-      <p className="text-sm font-medium text-brand-800">{value}</p>
+    <div className="rounded-xl border border-white/50 bg-white/40 px-3 py-2">
+      <p className="text-xs text-slate-500">{icon} {label}</p>
+      <p className="text-sm font-medium text-slate-800">{value}</p>
     </div>
   );
 }
 
 function HygieneRow({ label, done }: { label: string; done: boolean }) {
   return (
-    <div className={cn("flex items-center gap-2 rounded-xl px-3 py-2", done ? "bg-emerald-50 text-emerald-700" : "bg-brand-50/50 text-brand-300")}>
+    <div
+      className={cn(
+        "flex items-center gap-2 rounded-xl border px-3 py-2",
+        done ? "border-emerald-300/50 bg-emerald-400/15 text-emerald-800" : "border-white/50 bg-white/30 text-slate-400"
+      )}
+    >
       <span>{done ? "✓" : "○"}</span>
       <span>{label}</span>
     </div>
