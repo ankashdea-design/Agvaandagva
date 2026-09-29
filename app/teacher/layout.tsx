@@ -1,9 +1,10 @@
-import { BottomNav } from "@/components/nav/bottom-nav";
+import { BottomNav, type NavIcon } from "@/components/nav/bottom-nav";
 import { AppSidebar } from "@/components/nav/app-sidebar";
 
-const items: { href: string; label: string; icon: "home" | "users" | "history" | "user" }[] = [
+const items: { href: string; label: string; icon: NavIcon }[] = [
   { href: "/teacher", label: "Нүүр", icon: "home" },
   { href: "/teacher/children", label: "Хүүхдүүд", icon: "users" },
+  { href: "/teacher/messages", label: "Зурвас", icon: "message" },
   { href: "/teacher/history", label: "Түүх", icon: "history" },
   { href: "/teacher/profile", label: "Профайл", icon: "user" },
 ];
