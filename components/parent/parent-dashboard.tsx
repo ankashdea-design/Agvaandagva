@@ -127,15 +127,7 @@ export function ParentDashboard({
       )}
 
       {/* Хүүхдийн профайл + өнөөдрийн байдал */}
-      <Card className="relative mb-4 overflow-hidden">
-        {/* Чимэглэл: гэр (десктоп) */}
-        <Image
-          src="/illustrations/1.png"
-          alt=""
-          width={140}
-          height={90}
-          className="pointer-events-none absolute right-3 top-2 hidden opacity-90 sm:block"
-        />
+      <Card className="mb-4">
         <div className="flex items-center gap-4">
           <div className="flex size-16 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-brand-500 to-sky-400 text-xl font-extrabold text-white shadow-lg shadow-brand-600/25">
             {initials}
@@ -147,6 +139,14 @@ export function ParentDashboard({
               {formatMongolianDate(date)}
             </p>
           </div>
+          {/* Чимэглэл: нэрний ард — цэцэгтэй ишлэл (десктоп) */}
+          <Image
+            src="/illustrations/3.png"
+            alt=""
+            width={80}
+            height={80}
+            className="pointer-events-none hidden w-20 shrink-0 select-none sm:block"
+          />
         </div>
 
         {attendance && attendance.status !== "present" ? (
@@ -156,7 +156,7 @@ export function ParentDashboard({
             {attendance.status === "excused" && "🏠 Өнөөдөр чөлөөтэй"}
           </div>
         ) : (
-                    <div className="mt-4 flex items-center justify-between rounded-2xl bg-slate-50 px-4 py-3">
+          <div className="mt-4 flex items-center justify-between rounded-2xl bg-slate-50 px-4 py-3">
             <p className="text-sm font-bold text-slate-600">Өнөөдрийн байдал</p>
             {mood ? (
               <span className="inline-flex items-center gap-2">
