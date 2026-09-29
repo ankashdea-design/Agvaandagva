@@ -18,8 +18,8 @@ const ACTIVITY_LABELS: { key: string; label: string; icon: string; tile: string 
   { key: "drawing", label: "Зураг зурсан", icon: "🎨", tile: "bg-amber-50" },
   { key: "music", label: "Дуу дуулсан", icon: "🎵", tile: "bg-violet-50" },
   { key: "story", label: "Үлгэр сонссон", icon: "📖", tile: "bg-sky-50" },
-  { key: "play", label: "Тоглолт наадсан", icon: "🧸", tile: "bg-rose-50" },
-  { key: "physical", label: "Хөдөлгөөнт тоглолт", icon: "🏃", tile: "bg-emerald-50" },
+  { key: "play", label: "Тоглож наадсан", icon: "🧸", tile: "bg-rose-50" },
+  { key: "physical", label: "Биеийн тамир", icon: "🏃", tile: "bg-emerald-50" },
   { key: "cognitive", label: "Гадаа тоглосон", icon: "🌳", tile: "bg-lime-50" },
 ];
 
