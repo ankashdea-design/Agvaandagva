@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { createBrowserClient } from "@supabase/ssr";
 import {
   Home, Users, History, User, LayoutDashboard, School,
-  FileBarChart, Settings, Bell, LogOut,
+  FileBarChart, Settings, Bell, LogOut, MessageSquare,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -21,6 +21,7 @@ const ICONS = {
   reports: FileBarChart,
   settings: Settings,
   bell: Bell,
+  message: MessageSquare,
 } as const;
 
 export type SidebarIcon = keyof typeof ICONS;
@@ -112,7 +113,7 @@ export function AppSidebar({
         })}
       </nav>
 
-          {/* Чимэглэл — хүүхдүүд наадаж буй (Гарахын дээр) */}
+      {/* Чимэглэл — хүүхдүүд наадаж буй (Гарахын дээр) */}
       <div className="mb-4 flex justify-center">
         <Image
           src="/illustrations/1.png"
