@@ -140,12 +140,12 @@ export function ParentDashboard({
             </p>
           </div>
           {/* Чимэглэл: нэрний ард — цэцэгтэй ишлэл (десктоп) */}
-          <Image
+                    <Image
             src="/illustrations/3.png"
             alt=""
-            width={80}
-            height={80}
-            className="pointer-events-none hidden w-20 shrink-0 select-none sm:block"
+            width={96}
+            height={96}
+            className="pointer-events-none hidden w-24 shrink-0 select-none sm:block"
           />
         </div>
 
