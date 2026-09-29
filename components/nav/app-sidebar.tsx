@@ -112,10 +112,10 @@ export function AppSidebar({
         })}
       </nav>
 
-      {/* Чимэглэл — ишлэлтэй цэцэг (Гарахын дээр) */}
+          {/* Чимэглэл — хүүхдүүд наадаж буй (Гарахын дээр) */}
       <div className="mb-4 flex justify-center">
         <Image
-          src="/illustrations/3.png"
+          src="/illustrations/1.png"
           alt=""
           width={200}
           height={160}
