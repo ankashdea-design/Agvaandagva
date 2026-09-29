@@ -43,7 +43,17 @@ export async function sendMessage(
     .select("teacher_id")
     .in("class_id", classIds);
 
-  const teacherIds = [...new Set((tcLinks ?? []).map((t) => t.teacher_id))];
+    let teacherIds = [...new Set((tcLinks ?? []).map((t) => t.teacher_id))];
+
+  // Тайлбар: teacher_classes-д мөр байхгүй бол бүлгийн бүх багш руу илгээнэ
+  if (teacherIds.length === 0) {
+    const { data: fallback } = await supabase
+      .from("teachers")
+      .select("id")
+      .eq("kindergarten_id", classKindergartenId);
+    teacherIds = [...new Set((fallback ?? []).map((t) => t.id))];
+  }
+
   if (teacherIds.length === 0)
     return { error: "Багш олдсонгүй. Админтай холбогдоно уу." };
 
