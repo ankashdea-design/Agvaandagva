@@ -156,16 +156,8 @@ export function ParentDashboard({
             {attendance.status === "excused" && "🏠 Өнөөдөр чөлөөтэй"}
           </div>
         ) : (
-          <div className="mt-4 flex items-center justify-between gap-2 rounded-2xl bg-slate-50 px-4 py-3">
-            {/* Чимэглэл: жижиг цэцэг */}
-            <Image
-              src="/illustrations/3.png"
-              alt=""
-              width={40}
-              height={40}
-              className="pointer-events-none hidden shrink-0 sm:block"
-            />
-            <p className="flex-1 text-sm font-bold text-slate-600">Өнөөдрийн байдал</p>
+                    <div className="mt-4 flex items-center justify-between rounded-2xl bg-slate-50 px-4 py-3">
+            <p className="text-sm font-bold text-slate-600">Өнөөдрийн байдал</p>
             {mood ? (
               <span className="inline-flex items-center gap-2">
                 <span className="flex size-9 items-center justify-center rounded-full bg-emerald-50 text-xl">{mood.emoji}</span>
