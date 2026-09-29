@@ -3,6 +3,7 @@ import { AppSidebar } from "@/components/nav/app-sidebar";
 
 const items: { href: string; label: string; icon: NavIcon }[] = [
   { href: "/parent", label: "Нүүр", icon: "home" },
+  { href: "/parent/messages", label: "Зурвас", icon: "message" },
   { href: "/parent/history", label: "Түүх", icon: "history" },
   { href: "/parent/notifications", label: "Мэдэгдэл", icon: "bell" },
   { href: "/parent/profile", label: "Профайл", icon: "user" },
@@ -19,7 +20,7 @@ export default function ParentLayout({ children }: { children: React.ReactNode }
         {children}
       </div>
 
-      {/* Утас: доод floating нав (десктоп дээр нуугдана) */}
+      {/* Утас: доод floating nav (десктоп дээр нуугдана) */}
       <div className="lg:hidden">
         <BottomNav items={items} />
       </div>
