@@ -25,7 +25,7 @@ export async function sendMessage(
 
   const childIds = [...new Set((links ?? []).map((l) => l.child_id))];
   if (childIds.length === 0)
-    return { error: "Хүүхдийн бүртгэл олдсонгүй. Цэцэрлэгийн админтай холбогдоно уу." };
+    return { error: "Хүүхдийн бүртгэл олдсонгүй. Админтай холбогдоно уу." };
 
   // 2. Хүүхдүүдийн бүлгүүд
   const { data: children } = await supabase
