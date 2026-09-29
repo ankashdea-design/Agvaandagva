@@ -18,13 +18,13 @@ export default async function TeacherMessagesPage() {
   const supabase = createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
-  // Миний бүлгүүд — classes.teacher_id багана
-  const { data: myClasses } = await supabase
-    .from("classes")
-    .select("id, name")
+    // Миний бүлгүүд — teacher_classes холбоос
+  const { data: tcLinks } = await supabase
+    .from("teacher_classes")
+    .select("class_id")
     .eq("teacher_id", user?.id ?? "");
 
-  const classIds = (myClasses ?? []).map((c) => c.id);
+  const classIds = [...new Set((tcLinks ?? []).map((r) => r.class_id))];
   const classId = classIds[0] ?? null;
 
   const { data: messages } = classIds.length
