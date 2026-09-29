@@ -2,25 +2,31 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ===== Glass токенууд ===== */
+:root {
+  --glass-bg: rgba(255, 255, 255, 0.58);
+  --glass-bg-strong: rgba(255, 255, 255, 0.76);
+  --glass-bg-soft: rgba(255, 255, 255, 0.42);
+  --glass-border: rgba(255, 255, 255, 0.68);
+  --glass-border-strong: rgba(255, 255, 255, 0.85);
+}
+
 html,
 body {
-  color: #24362d;
+  color: #242949;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  background-color: #f7f5f0;
+  background-color: #f2f5fc;
   background-image:
-    radial-gradient(circle at 8% 12%, rgba(201, 219, 208, 0.5), transparent 40%),
-    radial-gradient(circle at 92% 18%, rgba(231, 213, 184, 0.45), transparent 42%),
-    radial-gradient(circle at 15% 85%, rgba(163, 194, 174, 0.35), transparent 45%),
-    radial-gradient(circle at 88% 92%, rgba(212, 195, 168, 0.4), transparent 40%),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' viewBox='0 0 400 400'%3E%3Cg fill='none' stroke='%234f7d62' stroke-width='1.5' opacity='0.08'%3E%3Ccircle cx='60' cy='60' r='18'/%3E%3Ccircle cx='340' cy='90' r='12'/%3E%3Cpath d='M120 250 l6 -14 l6 14 l-6 -6 z'/%3E%3Cpath d='M300 320 l6 -14 l6 14 l-6 -6 z'/%3E%3Cpath d='M40 320 q10 -20 20 0 q10 -20 20 0' /%3E%3Cpath d='M250 40 q10 -16 20 0 q10 -16 20 0' /%3E%3Ccircle cx='200' cy='200' r='2' fill='%234f7d62' stroke='none'/%3E%3Ccircle cx='170' cy='120' r='2' fill='%234f7d62' stroke='none'/%3E%3Ccircle cx='230' cy='280' r='2' fill='%234f7d62' stroke='none'/%3E%3C/g%3E%3C/svg%3E");
+    radial-gradient(52rem 34rem at 12% -8%, rgba(154, 184, 255, 0.55) 0%, transparent 60%),
+    radial-gradient(44rem 30rem at 108% 12%, rgba(125, 211, 252, 0.5) 0%, transparent 58%),
+    radial-gradient(40rem 30rem at 50% 118%, rgba(153, 246, 228, 0.4) 0%, transparent 55%);
   background-attachment: fixed;
-  background-repeat: no-repeat, no-repeat, no-repeat, no-repeat, repeat;
-  background-size: auto, auto, auto, auto, 400px 400px;
   min-height: 100vh;
+  min-height: 100dvh;
 }
 
 * {
@@ -37,9 +43,62 @@ h1, h2, h3 {
 }
 
 ::selection {
-  background-color: #c9dbd0;
+  background-color: #c7d2fe;
 }
 
 input, select, textarea {
-  transition: border-color 0.15s ease-out;
+  transition: border-color 0.15s ease-out, background-color 0.15s ease-out, box-shadow 0.15s ease-out;
+}
+
+button:not([disabled]),
+[role="button"]:not([disabled]) {
+  cursor: pointer;
+}
+
+/* ===== Шилэн (glass) классууд ===== */
+.glass {
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: blur(18px) saturate(1.5);
+  backdrop-filter: blur(18px) saturate(1.5);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 8px 32px rgba(65, 81, 216, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.glass-strong {
+  background: var(--glass-bg-strong);
+  -webkit-backdrop-filter: blur(24px) saturate(1.6);
+  backdrop-filter: blur(24px) saturate(1.6);
+  border: 1px solid var(--glass-border-strong);
+  box-shadow: 0 16px 48px rgba(65, 81, 216, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.85);
+}
+
+.glass-soft {
+  background: var(--glass-bg-soft);
+  -webkit-backdrop-filter: blur(12px) saturate(1.4);
+  backdrop-filter: blur(12px) saturate(1.4);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 4px 18px rgba(65, 81, 216, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+.glass-hover {
+  transition: box-shadow 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
+}
+.glass-hover:hover {
+  border-color: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 16px 48px rgba(65, 81, 216, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.85);
+  transform: translateY(-1px);
+}
+
+.glass-btn {
+  background: rgba(255, 255, 255, 0.55);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+}
+
+.press {
+  transition: transform 0.12s ease;
+}
+.press:active {
+  transform: scale(0.97);
 }
