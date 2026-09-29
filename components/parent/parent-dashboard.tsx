@@ -10,6 +10,10 @@ const MOOD_LABEL: Record<string, { emoji: string; text: string }> = {
   sad: { emoji: "😢", text: "Уйтгартай" },
 };
 const MEAL_LABEL: Record<string, string> = { poor: "Идсэнгүй", medium: "Дунд зэрэг идсэн", good: "Сайн идсэн" };
+const JUICE_LABEL: Record<string, string> = { drank: "Уусан", partial: "Бага зэрэг уусан", not_drank: "Уугаагүй" };
+const MEAL_INTAKE_LABEL: Record<string, string> = { ate: "Идсэн", partial: "Бага зэрэг идсэн", not_ate: "Идээгүй" };
+const BOWEL_LABEL: Record<string, string> = { good: "Сайн", medium: "Дунд", none: "Бие засаагүй" };
+
 const ACTIVITY_LABELS: { key: string; label: string; icon: string }[] = [
   { key: "drawing", label: "Зураг зурсан", icon: "🎨" },
   { key: "music", label: "Дуу хөгжим", icon: "🎵" },
@@ -101,6 +105,27 @@ export function ParentDashboard({
           )}
 
           <div className="mb-3 rounded-2xl bg-white p-4 shadow-soft">
+            <p className="mb-2 text-sm font-semibold text-brand-800">🍽️ Хоол, цайны дэлгэрэнгүй</p>
+            <div className="grid grid-cols-2 gap-2">
+              <MiniRow icon="☕" label="Өглөөний цай" value={report?.morning_tea ? JUICE_LABEL[report.morning_tea] : "—"} />
+              <MiniRow icon="🥤" label="Өдрийн жүүс" value={report?.juice ? JUICE_LABEL[report.juice] : "—"} />
+              <MiniRow icon="🍲" label="1-р хоол" value={report?.meal1 ? MEAL_INTAKE_LABEL[report.meal1] : "—"} />
+              <MiniRow icon="🍲" label="2-р хоол" value={report?.meal2 ? MEAL_INTAKE_LABEL[report.meal2] : "—"} />
+              <MiniRow icon="🍵" label="Оройн цай" value={report?.evening_tea ? JUICE_LABEL[report.evening_tea] : "—"} />
+              <MiniRow icon="🚽" label="Бие засалт" value={report?.bowel ? BOWEL_LABEL[report.bowel] : "—"} />
+            </div>
+          </div>
+
+          <div className="mb-3 rounded-2xl bg-white p-4 shadow-soft">
+            <p className="mb-2 text-sm font-semibold text-brand-800">🧼 Ариун цэвэр</p>
+            <div className="grid grid-cols-1 gap-1.5 text-sm">
+              <HygieneRow label="Гар угаасан" done={Boolean(report?.hygiene_hands)} />
+              <HygieneRow label="Бие зассан" done={Boolean(report?.hygiene_toilet)} />
+              <HygieneRow label="Шүд угаасан" done={Boolean(report?.hygiene_teeth)} />
+            </div>
+          </div>
+
+          <div className="mb-3 rounded-2xl bg-white p-4 shadow-soft">
             <p className="mb-2 text-sm font-semibold text-brand-800">ӨНӨӨДӨР</p>
             <div className="grid grid-cols-2 gap-2">
               {ACTIVITY_LABELS.map((a) => {
@@ -149,6 +174,24 @@ function StatusCard({
       <p className="mb-1 text-2xl">{icon}</p>
       <p className="text-xs text-brand-400">{label}</p>
       <p className="text-sm font-semibold text-brand-900">{value}</p>
+    </div>
+  );
+}
+
+function MiniRow({ icon, label, value }: { icon: string; label: string; value: string }) {
+  return (
+    <div className="rounded-xl bg-brand-50/50 px-3 py-2">
+      <p className="text-xs text-brand-400">{icon} {label}</p>
+      <p className="text-sm font-medium text-brand-800">{value}</p>
+    </div>
+  );
+}
+
+function HygieneRow({ label, done }: { label: string; done: boolean }) {
+  return (
+    <div className={cn("flex items-center gap-2 rounded-xl px-3 py-2", done ? "bg-emerald-50 text-emerald-700" : "bg-brand-50/50 text-brand-300")}>
+      <span>{done ? "✓" : "○"}</span>
+      <span>{label}</span>
     </div>
   );
 }
