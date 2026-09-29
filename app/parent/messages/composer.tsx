@@ -12,7 +12,7 @@ function SubmitButton() {
     <button
       type="submit"
       disabled={pending}
-      className="press rounded-xl bg-brand-600 px-5 py-2.5 text-sm font-bold text-white shadow-lg shadow-brand-600/25 disabled:opacity-50"
+      className="press shrink-0 rounded-xl bg-brand-600 px-5 py-3 text-sm font-bold text-white shadow-lg shadow-brand-600/25 disabled:opacity-50"
     >
       {pending ? "Илгээж байна…" : "Илгээх"}
     </button>
@@ -24,7 +24,6 @@ export function Composer() {
   const formRef = useRef<HTMLFormElement>(null);
   const lastState = useRef(state);
 
-  // Амжилттай илгээгдсэн үед талбарыг цэвэрлэнэ
   useEffect(() => {
     if (lastState.current !== state) {
       lastState.current = state;
@@ -36,22 +35,28 @@ export function Composer() {
     <form
       ref={formRef}
       action={formAction}
-      className="rounded-3xl border border-slate-100 bg-white p-4 shadow-[0_10px_36px_rgba(65,81,216,0.08)]"
+      className="rounded-3xl border border-slate-100 bg-white p-3 shadow-[0_10px_36px_rgba(65,81,216,0.08)]"
     >
-      <textarea
-        name="body"
-        rows={3}
-        maxLength={2000}
-        required
-        placeholder="Багш руу зурвас бичих… (жишээ: Өнөөдөр эрт сэрсэн, юу хийдэг вэ?)"
-        className="w-full resize-none rounded-2xl border border-slate-100 bg-slate-50 px-4 py-3 text-sm outline-none placeholder:text-slate-400 focus:border-brand-400"
-      />
+      <div className="flex items-end gap-2">
+        <textarea
+          name="body"
+          rows={1}
+          maxLength={2000}
+          required
+          placeholder="Багш руу зурвас бичих… (Enter = илгээх)"
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && !e.shiftKey) {
+              e.preventDefault();
+              e.currentTarget.form?.requestSubmit();
+            }
+          }}
+          className="max-h-32 min-h-[44px] flex-1 resize-none rounded-2xl border border-slate-100 bg-slate-50 px-4 py-3 text-sm leading-6 outline-none placeholder:text-slate-400 focus:border-brand-400"
+        />
+        <SubmitButton />
+      </div>
       {state.error && (
         <p className="mt-2 text-xs font-semibold text-rose-600">{state.error}</p>
       )}
-      <div className="mt-2 flex justify-end">
-        <SubmitButton />
-      </div>
     </form>
   );
 }
