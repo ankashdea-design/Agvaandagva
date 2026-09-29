@@ -29,8 +29,8 @@ export function BottomNav({ items }: { items: NavItem[] }) {
   const pathname = usePathname();
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-40 border-t border-brand-100 bg-white/95 backdrop-blur">
-      <div className="mx-auto flex max-w-md items-stretch justify-around">
+    <nav className="fixed bottom-3 left-4 right-4 z-40">
+      <div className="glass-strong mx-auto flex max-w-md items-stretch justify-around rounded-3xl">
         {items.map((item) => {
           const Icon = ICONS[item.icon];
           const active = pathname === item.href;
@@ -39,11 +39,18 @@ export function BottomNav({ items }: { items: NavItem[] }) {
               key={item.href}
               href={item.href}
               className={cn(
-                "flex flex-1 flex-col items-center gap-1 py-2.5 text-xs touch-target",
-                active ? "text-brand-700 font-medium" : "text-brand-400"
+                "press flex flex-1 flex-col items-center gap-1 rounded-2xl py-2.5 text-xs touch-target",
+                active ? "font-semibold text-brand-700" : "text-slate-400"
               )}
             >
-              <Icon size={22} strokeWidth={active ? 2.4 : 2} />
+              <span
+                className={cn(
+                  "flex size-8 items-center justify-center rounded-xl transition-colors",
+                  active ? "bg-brand-500/15" : ""
+                )}
+              >
+                <Icon size={20} strokeWidth={active ? 2.4 : 2} />
+              </span>
               {item.label}
             </Link>
           );
