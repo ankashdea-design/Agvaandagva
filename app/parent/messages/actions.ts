@@ -30,23 +30,30 @@ export async function sendMessage(
   // 2. Хүүхдүүдийн бүлгүүд
   const { data: children } = await supabase
     .from("children")
-    .select("class_id")
+    .select("id, class_id")
     .in("id", childIds);
 
   const classIds = [...new Set((children ?? []).map((c) => c.class_id))];
   if (classIds.length === 0)
     return { error: "Хүүхдийн бүлэг олдсонгүй. Админтай холбогдоно уу." };
 
-  // 3. Тийм бүлгүүдийн багш нар — teacher_classes холбоос
+  // 3. Бүлгийн kindergarten_id (fallback-д хэрэгтэй)
+  const { data: clsRows } = await supabase
+    .from("classes")
+    .select("id, kindergarten_id")
+    .in("id", classIds);
+  const classKindergartenId = clsRows?.[0]?.kindergarten_id ?? null;
+
+  // 4. Тийм бүлгүүдийн багш нар — teacher_classes холбоос
   const { data: tcLinks } = await supabase
     .from("teacher_classes")
     .select("teacher_id")
     .in("class_id", classIds);
 
-    let teacherIds = [...new Set((tcLinks ?? []).map((t) => t.teacher_id))];
+  let teacherIds = [...new Set((tcLinks ?? []).map((t) => t.teacher_id))];
 
   // Тайлбар: teacher_classes-д мөр байхгүй бол бүлгийн бүх багш руу илгээнэ
-  if (teacherIds.length === 0) {
+  if (teacherIds.length === 0 && classKindergartenId) {
     const { data: fallback } = await supabase
       .from("teachers")
       .select("id")
@@ -57,7 +64,7 @@ export async function sendMessage(
   if (teacherIds.length === 0)
     return { error: "Багш олдсонгүй. Админтай холбогдоно уу." };
 
-  // 4. Бүх холбогдох багш руу илгээнэ
+  // 5. Бүх холбогдох багш руу илгээнэ
   const { error } = await supabase.from("messages").insert(
     teacherIds.map((tid) => ({
       sender_id: user.id,
