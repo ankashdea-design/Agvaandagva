@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { Composer } from "./composer";
+import { ScrollToBottom } from "@/components/messages/scroll-to-bottom";
 import { cn } from "@/lib/utils";
 
 export const dynamic = "force-dynamic";
@@ -22,7 +23,7 @@ export default async function ParentMessagesPage() {
     .from("messages")
     .select("id, body, created_at, sender_id")
     .or(`sender_id.eq.${user?.id},recipient_id.eq.${user?.id}`)
-    .order("created_at", { ascending: false })
+    .order("created_at", { ascending: true })
     .limit(100);
 
   const senderIds = [...new Set((messages ?? []).map((m) => m.sender_id))];
@@ -42,36 +43,38 @@ export default async function ParentMessagesPage() {
 
       <Composer />
 
-      <div className="mt-4 space-y-2 pb-24">
-        {(messages ?? []).length === 0 && (
-          <div className="rounded-3xl border border-dashed border-slate-200 bg-white/60 py-10 text-center text-sm text-slate-400">
-            Одоогоор зурвас байхгүй.
-          </div>
-        )}
-        {(messages ?? []).map((m) => {
-          const mine = m.sender_id === user?.id;
-          return (
-            <div key={m.id} className={cn("flex", mine ? "justify-end" : "justify-start")}>
-              <div
-                className={cn(
-                  "max-w-[85%] rounded-3xl px-4 py-3 text-sm leading-relaxed",
-                  mine
-                    ? "rounded-br-md bg-brand-600 text-white shadow-lg shadow-brand-600/20"
-                    : "rounded-bl-md border border-slate-100 bg-white text-slate-700 shadow-[0_2px_10px_rgba(65,81,216,0.05)]"
-                )}
-              >
-                {!mine && (
-                  <p className="mb-1 text-xs font-bold text-slate-500">{nameOf(m.sender_id)}</p>
-                )}
-                <p className="whitespace-pre-wrap">{m.body}</p>
-                <p className={cn("mt-1 text-[10px]", mine ? "text-white/70" : "text-slate-400")}>
-                  {timeLabel(m.created_at)}
-                </p>
-              </div>
+      <ScrollToBottom>
+        <div className="mt-4 space-y-2 pb-24">
+          {(messages ?? []).length === 0 && (
+            <div className="rounded-3xl border border-dashed border-slate-200 bg-white/60 py-10 text-center text-sm text-slate-400">
+              Одоогоор зурвас байхгүй.
             </div>
-          );
-        })}
-      </div>
+          )}
+          {(messages ?? []).map((m) => {
+            const mine = m.sender_id === user?.id;
+            return (
+              <div key={m.id} className={cn("flex", mine ? "justify-end" : "justify-start")}>
+                <div
+                  className={cn(
+                    "max-w-[85%] rounded-3xl px-4 py-3 text-sm leading-relaxed",
+                    mine
+                      ? "rounded-br-md bg-brand-600 text-white shadow-lg shadow-brand-600/20"
+                      : "rounded-bl-md border border-slate-100 bg-white text-slate-700 shadow-[0_2px_10px_rgba(65,81,216,0.05)]"
+                  )}
+                >
+                  {!mine && (
+                    <p className="mb-1 text-xs font-bold text-slate-500">{nameOf(m.sender_id)}</p>
+                  )}
+                  <p className="whitespace-pre-wrap">{m.body}</p>
+                  <p className={cn("mt-1 text-[10px]", mine ? "text-white/70" : "text-slate-400")}>
+                    {timeLabel(m.created_at)}
+                  </p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </ScrollToBottom>
     </div>
   );
 }
