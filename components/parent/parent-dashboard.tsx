@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import type { ChildWithReport } from "@/types/database";
 import { formatMongolianDate, cn } from "@/lib/utils";
 
@@ -126,7 +127,15 @@ export function ParentDashboard({
       )}
 
       {/* Хүүхдийн профайл + өнөөдрийн байдал */}
-      <Card className="mb-4">
+      <Card className="relative mb-4 overflow-hidden">
+        {/* Чимэглэл: гэр (десктоп) */}
+        <Image
+          src="/illustrations/1.png"
+          alt=""
+          width={140}
+          height={90}
+          className="pointer-events-none absolute right-3 top-2 hidden opacity-90 sm:block"
+        />
         <div className="flex items-center gap-4">
           <div className="flex size-16 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-brand-500 to-sky-400 text-xl font-extrabold text-white shadow-lg shadow-brand-600/25">
             {initials}
@@ -147,8 +156,16 @@ export function ParentDashboard({
             {attendance.status === "excused" && "🏠 Өнөөдөр чөлөөтэй"}
           </div>
         ) : (
-          <div className="mt-4 flex items-center justify-between rounded-2xl bg-slate-50 px-4 py-3">
-            <p className="text-sm font-bold text-slate-600">Өнөөдрийн байдал</p>
+          <div className="mt-4 flex items-center justify-between gap-2 rounded-2xl bg-slate-50 px-4 py-3">
+            {/* Чимэглэл: жижиг цэцэг */}
+            <Image
+              src="/illustrations/3.png"
+              alt=""
+              width={40}
+              height={40}
+              className="pointer-events-none hidden shrink-0 sm:block"
+            />
+            <p className="flex-1 text-sm font-bold text-slate-600">Өнөөдрийн байдал</p>
             {mood ? (
               <span className="inline-flex items-center gap-2">
                 <span className="flex size-9 items-center justify-center rounded-full bg-emerald-50 text-xl">{mood.emoji}</span>
@@ -210,30 +227,40 @@ export function ParentDashboard({
           {/* Өнөөдөр юу хийсэн бэ? */}
           <Card className="mb-4">
             <SectionTitle icon="🌈" tile="bg-amber-50" title="Өнөөдөр юу хийсэн бэ?" />
-            <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
-              {ACTIVITY_LABELS.map((a) => {
-                const done = activities ? Boolean((activities as any)[a.key]) : false;
-                return (
-                  <div
-                    key={a.key}
-                    className={cn(
-                      "flex items-center gap-3 rounded-2xl border px-3 py-2.5",
-                      done ? "border-slate-50 bg-white shadow-[0_2px_10px_rgba(65,81,216,0.05)]" : "border-dashed border-slate-100 bg-slate-50/50"
-                    )}
-                  >
-                    <Tile icon={a.icon} bg={done ? a.tile : "bg-slate-100"} />
-                    <span className={cn("flex-1 text-sm font-semibold", done ? "text-slate-700" : "text-slate-300")}>{a.label}</span>
-                    <span
+            <div className="flex items-center gap-4">
+              <div className="grid flex-1 grid-cols-1 gap-2 sm:grid-cols-2">
+                {ACTIVITY_LABELS.map((a) => {
+                  const done = activities ? Boolean((activities as any)[a.key]) : false;
+                  return (
+                    <div
+                      key={a.key}
                       className={cn(
-                        "flex size-6 items-center justify-center rounded-full text-xs text-white",
-                        done ? "bg-emerald-500" : "bg-slate-200"
+                        "flex items-center gap-3 rounded-2xl border px-3 py-2.5",
+                        done ? "border-slate-50 bg-white shadow-[0_2px_10px_rgba(65,81,216,0.05)]" : "border-dashed border-slate-100 bg-slate-50/50"
                       )}
                     >
-                      {done ? "✓" : ""}
-                    </span>
-                  </div>
-                );
-              })}
+                      <Tile icon={a.icon} bg={done ? a.tile : "bg-slate-100"} />
+                      <span className={cn("flex-1 text-sm font-semibold", done ? "text-slate-700" : "text-slate-300")}>{a.label}</span>
+                      <span
+                        className={cn(
+                          "flex size-6 items-center justify-center rounded-full text-xs text-white",
+                          done ? "bg-emerald-500" : "bg-slate-200"
+                        )}
+                      >
+                        {done ? "✓" : ""}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+              {/* Чимэглэл: хүүхэд тоглож буй (десктоп) */}
+              <Image
+                src="/illustrations/2.png"
+                alt=""
+                width={150}
+                height={180}
+                className="pointer-events-none hidden lg:block"
+              />
             </div>
           </Card>
 
