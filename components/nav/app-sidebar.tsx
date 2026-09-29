@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { createBrowserClient } from "@supabase/ssr";
@@ -111,8 +112,19 @@ export function AppSidebar({
         })}
       </nav>
 
+      {/* Чимэглэл — ишлэлтэй цэцэг (Гарахын дээр) */}
+      <div className="mb-4 flex justify-center">
+        <Image
+          src="/illustrations/3.png"
+          alt=""
+          width={200}
+          height={160}
+          className="pointer-events-none w-44 select-none xl:w-52"
+        />
+      </div>
+
       {/* Доод хэсэг: хэрэглэгч + Гарах */}
-      <div className="mt-4 flex flex-col gap-2 border-t border-white/60 pt-4">
+      <div className="flex flex-col gap-2 border-t border-white/60 pt-4">
         <div className="px-1">
           <p className="truncate text-sm font-semibold text-slate-900">
             {user.name ?? "—"}
