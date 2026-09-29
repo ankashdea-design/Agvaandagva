@@ -17,35 +17,42 @@ export async function sendMessage(
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { error: "Хугацаа дууссан. Дахин нэвтэрнэ үү." };
 
-  // ⚠️ Эцэг эх → хүүхэд холбоос багана (parent_id гэж үзлээ, өөр бол соль)
-  const { data: child } = await supabase
+  // 1. Миний хүүхдүүд — parent_children холбоос
+  const { data: links } = await supabase
+    .from("parent_children")
+    .select("child_id")
+    .eq("parent_id", user.id);
+
+  const childIds = [...new Set((links ?? []).map((l) => l.child_id))];
+  if (childIds.length === 0)
+    return { error: "Хүүхдийн бүртгэл олдсонгүй. Цэцэрлэгийн админтай холбогдоно уу." };
+
+  // 2. Хүүхдүүдийн бүлгүүд
+  const { data: children } = await supabase
     .from("children")
     .select("class_id")
-    .eq("parent_id", user.id)
-    .limit(1)
-    .maybeSingle();
+    .in("id", childIds);
 
-  if (!child?.class_id)
-    return { error: "Хүүхдийн бүлэг олдсонгүй. Цэцэрлэгийн админтай холбогдоно уу." };
+  const classIds = [...new Set((children ?? []).map((c) => c.class_id))];
+  if (classIds.length === 0)
+    return { error: "Хүүхдийн бүлэг олдсонгүй. Админтай холбогдоно уу." };
 
-  // ⚠️ Бүлэг → багш холбоос багана (teacher_id гэж үзлээ, өөр бол соль)
-  const { data: cls } = await supabase
-    .from("classes")
+  // 3. Тийм бүлгүүдийн багш нар — teacher_classes холбоос
+  const { data: tcLinks } = await supabase
+    .from("teacher_classes")
     .select("teacher_id")
-    .eq("id", child.class_id)
-    .maybeSingle();
+    .in("class_id", classIds);
 
-  const teacherId = (cls as { teacher_id?: string | string[] } | null)?.teacher_id ?? null;
-  const recipients = Array.isArray(teacherId) ? teacherId : teacherId ? [teacherId] : [];
-
-  if (recipients.length === 0)
+  const teacherIds = [...new Set((tcLinks ?? []).map((t) => t.teacher_id))];
+  if (teacherIds.length === 0)
     return { error: "Багш олдсонгүй. Админтай холбогдоно уу." };
 
+  // 4. Бүх холбогдох багш руу илгээнэ
   const { error } = await supabase.from("messages").insert(
-    recipients.map((rid) => ({
+    teacherIds.map((tid) => ({
       sender_id: user.id,
-      recipient_id: rid,
-      class_id: child.class_id,
+      recipient_id: tid,
+      class_id: classIds[0],
       body,
     }))
   );
