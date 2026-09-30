@@ -43,7 +43,7 @@ export function Composer() {
           rows={1}
           maxLength={2000}
           required
-          placeholder="Багш руу зурвас бичих… (Enter = илгээх)"
+          placeholder="Багш руу зурвас бичих…"
           onKeyDown={(e) => {
             if (e.key === "Enter" && !e.shiftKey) {
               e.preventDefault();
