@@ -61,7 +61,7 @@ export function AppSidebar({
             .single();
           name = profile?.full_name ?? profile?.name ?? undefined;
         } catch {
-          /* profile олохгүй бол имэйлээр үлдэнэ */
+          /* profile олдохгүй бол имэйлээр үлдэнэ */
         }
         setUser({ name, email: u.email ?? "" });
       })
@@ -81,15 +81,8 @@ export function AppSidebar({
     <aside className="glass fixed inset-y-4 left-4 z-40 hidden w-64 flex-col rounded-3xl p-5 lg:flex">
       {/* Лого */}
       <Link href={items[0]?.href ?? "/"} className="press flex items-center gap-3">
-        <div className="flex size-11 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-gradient-to-br from-brand-500/90 to-sky-400/90 shadow-lg shadow-brand-600/25">
-          <Image
-            src="/illustrations/logo.png"
-            alt="KinderCare MN"
-            width={44}
-            height={44}
-            className="size-full object-cover"
-            priority
-          />
+        <div className="flex size-11 items-center justify-center rounded-2xl bg-gradient-to-br from-brand-500/90 to-sky-400/90 text-xl text-white shadow-lg shadow-brand-600/25">
+          🌱
         </div>
         <div>
           <p className="text-sm font-extrabold tracking-tight text-slate-900">KinderCare MN</p>
