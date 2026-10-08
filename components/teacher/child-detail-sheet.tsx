@@ -292,7 +292,6 @@ export function ChildDetailSheet({
           </div>
         </Section>
 
-        {/* ⬇️ ШИНЭ ХЭСЭГ */}
         <Section title="😴 Өдрийн унтлага">
           <div className="grid grid-cols-2 gap-2">
             <PillButton active={report.nap === true} onClick={() => saveField("nap", true, "nap")}>
