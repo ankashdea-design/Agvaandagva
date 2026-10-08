@@ -50,7 +50,8 @@ export async function updateReportField(input: {
     | "meal2"
     | "bowel"
     | "morning_tea"
-    | "evening_tea";
+    | "evening_tea"
+    | "nap";
   value: MealStatus | MoodStatus | boolean | string | JuiceStatus | MealIntakeStatus | BowelStatus;
 }) {
   const supabase = createClient();
@@ -132,7 +133,8 @@ export async function bulkApplyToClass(input: {
     | { type: "meal"; value: MealStatus }
     | { type: "mood"; value: MoodStatus }
     | { type: "activity"; key: ActivityKey; value: boolean }
-    | { type: "hygiene"; key: "hygiene_hands" | "hygiene_toilet" | "hygiene_teeth"; value: boolean };
+    | { type: "hygiene"; key: "hygiene_hands" | "hygiene_toilet" | "hygiene_teeth"; value: boolean }
+    | { type: "nap"; value: boolean };
 }) {
   const supabase = createClient();
   const {
@@ -147,6 +149,7 @@ export async function bulkApplyToClass(input: {
     ...(input.kind.type === "meal" ? { meal: input.kind.value } : {}),
     ...(input.kind.type === "mood" ? { mood: input.kind.value } : {}),
     ...(input.kind.type === "hygiene" ? { [input.kind.key]: input.kind.value } : {}),
+    ...(input.kind.type === "nap" ? { nap: input.kind.value } : {}),
   }));
 
   const { data: reports, error: upsertErr } = await supabase
