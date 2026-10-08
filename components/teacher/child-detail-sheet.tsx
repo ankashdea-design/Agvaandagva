@@ -137,7 +137,29 @@ export function ChildDetailSheet({
       onQueue({ type: "activity", ...job });
       return;
     }
-              <X size={22} />
+    startTransition(async () => {
+      await updateActivity(job as any);
+    });
+  }
+
+  function saveNote(value: string) {
+    setNote(value);
+    saveField("highlight_note", value, "note");
+  }
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-end bg-black/30" onClick={onClose}>
+      <div
+        className="max-h-[88vh] w-full overflow-y-auto rounded-t-3xl bg-white p-4 pb-10 shadow-card"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div className="mb-4 flex items-center justify-between">
+          <div>
+            <h2 className="text-lg font-semibold text-brand-900">{child.full_name}</h2>
+            <p className="text-xs text-brand-500">Өнөөдрийн байдал</p>
+          </div>
+          <button onClick={onClose} className="touch-target rounded-full p-1 text-brand-400">
+            <X size={22} />
           </button>
         </div>
 
@@ -198,7 +220,7 @@ export function ChildDetailSheet({
 
         <Section title="🍲 2-р хоол">
           <div className="grid grid-cols-3 gap-2">
-            {MEAL_INTAKE_OPTIONS.map={(o) => (
+            {MEAL_INTAKE_OPTIONS.map((o) => (
               <PillButton key={o.value} active={report.meal2 === o.value} onClick={() => saveField("meal2", o.value, "meal2")}>
                 <span className="text-xs">{o.label}</span>
               </PillButton>
@@ -270,6 +292,7 @@ export function ChildDetailSheet({
           </div>
         </Section>
 
+        {/* ⬇️ ШИНЭ ХЭСЭГ */}
         <Section title="😴 Өдрийн унтлага">
           <div className="grid grid-cols-2 gap-2">
             <PillButton active={report.nap === true} onClick={() => saveField("nap", true, "nap")}>
