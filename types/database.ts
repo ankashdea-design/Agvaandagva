@@ -39,6 +39,7 @@ export interface DailyReport {
   meal: MealStatus | null;
   nap_start: string | null;
   nap_end: string | null;
+  nap: boolean | null;
   hygiene_hands: boolean;
   hygiene_toilet: boolean;
   hygiene_teeth: boolean;
