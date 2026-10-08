@@ -200,7 +200,7 @@ export function ParentDashboard({
 
           {/* Өдрийн хэрэгцээ */}
           <Card className="mb-4">
-            <SectionTitle icon="🚽" tile="bg-sky-50" title="Өдрийн хэрэгцээ" />
+            <SectionTitle icon="✨" tile="bg-sky-50" title="Өдрийн хэрэгцээ" />
             <div className="grid grid-cols-1 gap-2">
               <Row icon="🧼" tile="bg-sky-50" label="Гар угаасан" value={report?.hygiene_hands ? "Тийм" : null} />
               <Row icon="🧻" tile="bg-violet-50" label="Хүндээр бие зассан" value={report?.hygiene_toilet ? "Тийм" : null} />
