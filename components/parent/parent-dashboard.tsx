@@ -104,6 +104,8 @@ export function ParentDashboard({
       .slice(0, 2) ?? "?";
 
   const mood = report?.mood ? MOOD_LABEL[report.mood] : null;
+  const napLabel =
+    report?.nap === true ? "Тийм" : report?.nap === false ? "Үгүй" : null;
 
   return (
     <div className="mx-auto max-w-md px-4 pt-5 sm:max-w-xl lg:max-w-2xl">
@@ -203,13 +205,14 @@ export function ParentDashboard({
               <Row icon="🧼" tile="bg-sky-50" label="Гар угаасан" value={report?.hygiene_hands ? "Тийм" : null} />
               <Row icon="🧻" tile="bg-violet-50" label="Хүндээр бие зассан" value={report?.hygiene_toilet ? "Тийм" : null} />
               <Row icon="🦷" tile="bg-emerald-50" label="Шүд угаасан" value={report?.hygiene_teeth ? "Тийм" : null} />
+              <Row icon="😴" tile="bg-indigo-50" label="Өдрийн унтлага" value={napLabel} />
             </div>
           </Card>
 
           {/* Нойр */}
           {(report?.nap_start || report?.nap_end) && (
             <Card className="mb-4">
-              <SectionTitle icon="😴" tile="bg-indigo-50" title="Өдрийн нойр" />
+              <SectionTitle icon="🌜" tile="bg-indigo-50" title="Өдрийн нойр" />
               <p className="rounded-2xl bg-indigo-50 px-4 py-3 text-center text-lg font-extrabold text-indigo-700">
                 {report?.nap_start ?? "?"} – {report?.nap_end ?? "?"}
               </p>
