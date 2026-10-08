@@ -79,6 +79,7 @@ export function TeacherDashboard({
           meal: null,
           nap_start: null,
           nap_end: null,
+          nap: null,
           hygiene_hands: false,
           hygiene_toilet: false,
           hygiene_teeth: false,
@@ -111,6 +112,7 @@ export function TeacherDashboard({
           };
           return { ...c, daily_report: report, daily_activities: { ...activities, [kind.key]: kind.value } };
         }
+        if (kind.type === "nap") return { ...c, daily_report: { ...report, nap: kind.value } };
         return c;
       })
     );
