@@ -19,14 +19,19 @@ body {
 }
 
 body {
-  background-color: #f2f5fc;
-  background-image:
-    radial-gradient(52rem 34rem at 12% -8%, rgba(154, 184, 255, 0.55) 0%, transparent 60%),
-    radial-gradient(44rem 30rem at 108% 12%, rgba(125, 211, 252, 0.5) 0%, transparent 58%),
-    radial-gradient(40rem 30rem at 50% 118%, rgba(153, 246, 228, 0.4) 0%, transparent 55%);
-  background-attachment: fixed;
+  background-color: #eaf4ff;
   min-height: 100vh;
   min-height: 100dvh;
+}
+
+/* ===== Үндсэн фон: тэнгэр + талын сцен (тогтмол, контентийн доор) ===== */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: url("/bg-scene.png") no-repeat center bottom / cover;
+  pointer-events: none;
 }
 
 * {
